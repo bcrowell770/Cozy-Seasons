@@ -2,7 +2,13 @@
 
 All notable changes to this watchface will be documented here.
 
-## [1.1]
+## [Unreleased]
+
+No unreleased changes.
+
+---
+
+## [1.1] - 2026-04-11
 
 ### Added
 

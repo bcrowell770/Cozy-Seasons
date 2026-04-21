@@ -2,7 +2,7 @@
 
 ## Current Status
 
-The watchface is functional and building successfully in CloudPebble. Source-side layout work is complete.
+v1.1 has been published. The watchface is functional and building successfully in CloudPebble.
 
 ## Completed
 
@@ -68,15 +68,13 @@ The watchface is functional and building successfully in CloudPebble. Source-sid
 
 ## Build / Tooling Notes
 
-CloudPebble requires new Clay keys to be added in two places:
+CloudPebble requires Clay keys to be present in two places:
 
 1. `config.js`
 2. CloudPebble Settings → PebbleKit JS Message Keys
 
 If only `config.js` is updated, build may fail with undeclared `MESSAGE_KEY_*`.
 
-This workspace does not provide a connected Basalt device or emulator feedback loop, so the remaining task cannot be completed automatically here.
-
 ## Next Milestone
 
-None
+No active milestone. Future work should start from a new task.

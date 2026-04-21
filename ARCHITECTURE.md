@@ -3,6 +3,10 @@
 ## Project
 Seasonal Pebble watchface for Basalt (144x168), written in C with Clay configuration.
 
+## Current Release
+- Published version: v1.1
+- v1.1 focus: layout polish, Low Vision Mode, AM/PM split, Bluetooth icon sizing, and battery/date readability fixes
+
 ## Platform
 - Pebble Basalt only
 - Resolution: 144x168
@@ -49,11 +53,12 @@ This avoids layout issues on Basalt in 12-hour mode and allows tighter control o
 ### Normal Mode
 - Standard layout
 - Lightweight presentation
-- No backing panel unless later reintroduced intentionally
+- No backing panel
 
 ### Low Vision Mode
 - Larger / clearer layout
-- Backing panel behind text
+- Backing panel behind time
+- Separate date pill
 - Higher contrast
 - Larger battery bar
 - Intended to improve readability without significantly changing performance
