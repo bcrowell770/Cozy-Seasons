@@ -4,7 +4,7 @@ Build and publish the optimized v1.2 release.
 
 ## Current Release
 
-v1.2 builds successfully with Pebble SDK 4.17 and is ready for review.
+v1.2 builds successfully with Pebble SDK 4.17, has passed on-watch sideload testing, and is ready for publication.
 
 ## Release Scope
 

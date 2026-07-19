@@ -27,6 +27,10 @@ No unreleased changes.
 - Retry a failed background allocation on the next minute tick instead of leaving the watchface blank until the following hour
 - Detach the bitmap layer before destroying its background bitmap, preventing a stale pointer during image changes
 
+### Validation
+
+- Built locally with Pebble SDK 4.17 and successfully sideloaded and tested on Basalt hardware
+
 ---
 
 ## [1.1] - 2026-04-11

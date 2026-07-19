@@ -2,7 +2,7 @@
 
 ## Current Status
 
-v1.2 builds successfully with Pebble SDK 4.17. The watchface remains Basalt-only.
+v1.2 builds successfully with Pebble SDK 4.17 and has passed on-watch sideload testing. The watchface remains Basalt-only.
 
 ## Completed
 
@@ -46,6 +46,7 @@ v1.2 builds successfully with Pebble SDK 4.17. The watchface remains Basalt-only
 - Initial background allocation moved earlier to reduce heap fragmentation
 - Failed background loads now retry on the next minute tick
 - AppMessage outbox allocation reduced because the watchface does not send payloads
+- v1.2 PBW sideloaded and validated successfully on Basalt hardware
 
 ## Current Behavior Notes
 
@@ -82,4 +83,4 @@ If only `config.js` is updated, build may fail with undeclared `MESSAGE_KEY_*`.
 
 ## Next Milestone
 
-Publish v1.2 after review and on-watch validation.
+Publish the validated v1.2 release.
