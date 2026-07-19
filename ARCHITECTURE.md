@@ -4,8 +4,8 @@
 Seasonal Pebble watchface for Basalt (144x168), written in C with Clay configuration.
 
 ## Current Release
-- Published version: v1.1
-- v1.1 focus: layout polish, Low Vision Mode, AM/PM split, Bluetooth icon sizing, and battery/date readability fixes
+- Release version: v1.2
+- v1.2 focus: reliable background loading, Basalt-native winter resources, and reproducible local SDK builds
 
 ## Platform
 - Pebble Basalt only

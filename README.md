@@ -82,9 +82,11 @@ Seasonal aesthetic without sacrificing readability
 
 Key files:
 
-src/main.c – core watchface logic and layout
+src/c/main.c – core watchface logic and layout
 
-config.js – Clay configuration
+src/pkjs/config.js – Clay configuration
+
+package.json – app metadata, message keys, target platform, and resource manifest
 
 ARCHITECTURE.md – system design
 
@@ -93,6 +95,12 @@ PROJECT_STATE.md – current state and notes
 TASK.md – active work items
 
 CHANGELOG.md – release history
+
+Local build (from WSL with the Pebble SDK installed):
+
+`pebble build`
+
+The Basalt PBW is written to `build/Cozy Seasons.pbw`.
 
 📄 Changelog
 

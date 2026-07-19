@@ -1,0 +1,622 @@
+{
+    "author": "BD Crowell",
+    "dependencies": {
+        "@rebble/clay": "^1.0.8"
+    },
+    "keywords": [
+        "pebble-app"
+    ],
+    "name": "cozy-seasons",
+    "pebble": {
+        "capabilities": [
+            "configurable"
+        ],
+        "displayName": "Cozy Seasons",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "TextColor",
+            "ShowDate",
+            "AnimateLeaves",
+            "SeasonMode",
+            "ManualSeason",
+            "ShowBtIcon",
+            "BtVibrate",
+            "LowVisionMode"
+        ],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/spring_07.png",
+                    "name": "IMAGE_SPRING_07",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_14.png",
+                    "name": "IMAGE_SPRING_14",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_04.png",
+                    "name": "IMAGE_WINTER_04",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_11.png",
+                    "name": "IMAGE_WINTER_11",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_18.png",
+                    "name": "IMAGE_WINTER_18",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_00.png",
+                    "name": "IMAGE_SPRING_00",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_04.png",
+                    "name": "IMAGE_SUMMER_04",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_16.png",
+                    "name": "IMAGE_SUMMER_16",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_10.png",
+                    "name": "IMAGE_SUMMER_10",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_22.png",
+                    "name": "IMAGE_SUMMER_22",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_05.png",
+                    "name": "IMAGE_WINTER_05",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_12.png",
+                    "name": "IMAGE_WINTER_12",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_19.png",
+                    "name": "IMAGE_WINTER_19",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_01.png",
+                    "name": "IMAGE_SPRING_01",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_08.png",
+                    "name": "IMAGE_SPRING_08",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_15.png",
+                    "name": "IMAGE_SPRING_15",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_05.png",
+                    "name": "IMAGE_SUMMER_05",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_11.png",
+                    "name": "IMAGE_SUMMER_11",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_17.png",
+                    "name": "IMAGE_SUMMER_17",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_06.png",
+                    "name": "IMAGE_WINTER_06",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_13.png",
+                    "name": "IMAGE_WINTER_13",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_20.png",
+                    "name": "IMAGE_WINTER_20",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_02.png",
+                    "name": "IMAGE_SPRING_02",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_09.png",
+                    "name": "IMAGE_SPRING_09",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_16.png",
+                    "name": "IMAGE_SPRING_16",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_21.png",
+                    "name": "IMAGE_SPRING_21",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_23.png",
+                    "name": "IMAGE_SUMMER_23",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_00.png",
+                    "name": "IMAGE_WINTER_00",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_07.png",
+                    "name": "IMAGE_WINTER_07",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_14.png",
+                    "name": "IMAGE_WINTER_14",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_21.png",
+                    "name": "IMAGE_WINTER_21",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_03.png",
+                    "name": "IMAGE_SPRING_03",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_10.png",
+                    "name": "IMAGE_SPRING_10",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_17.png",
+                    "name": "IMAGE_SPRING_17",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_22.png",
+                    "name": "IMAGE_SPRING_22",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_00.png",
+                    "name": "IMAGE_SUMMER_00",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_06.png",
+                    "name": "IMAGE_SUMMER_06",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_12.png",
+                    "name": "IMAGE_SUMMER_12",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_18.png",
+                    "name": "IMAGE_SUMMER_18",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_04.png",
+                    "name": "IMAGE_SPRING_04",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_15.png",
+                    "name": "IMAGE_WINTER_15",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_01.png",
+                    "name": "IMAGE_WINTER_01",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_22.png",
+                    "name": "IMAGE_WINTER_22",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_08.png",
+                    "name": "IMAGE_WINTER_08",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_11.png",
+                    "name": "IMAGE_SPRING_11",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_18.png",
+                    "name": "IMAGE_SPRING_18",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_01.png",
+                    "name": "IMAGE_SUMMER_01",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_23.png",
+                    "name": "IMAGE_SPRING_23",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_07.png",
+                    "name": "IMAGE_SUMMER_07",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_13.png",
+                    "name": "IMAGE_SUMMER_13",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_19.png",
+                    "name": "IMAGE_SUMMER_19",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_12.png",
+                    "name": "IMAGE_SPRING_12",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_19.png",
+                    "name": "IMAGE_SPRING_19",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/bt-icon.png",
+                    "name": "IMAGE_BT_ICON",
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_02.png",
+                    "name": "IMAGE_SUMMER_02",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_02.png",
+                    "name": "IMAGE_WINTER_02",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_00.png",
+                    "name": "IMAGE_AUTUMN_00",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_09.png",
+                    "name": "IMAGE_WINTER_09",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_08.png",
+                    "name": "IMAGE_SUMMER_08",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_16.png",
+                    "name": "IMAGE_WINTER_16",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_23.png",
+                    "name": "IMAGE_WINTER_23",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_05.png",
+                    "name": "IMAGE_SPRING_05",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_14.png",
+                    "name": "IMAGE_SUMMER_14",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_20.png",
+                    "name": "IMAGE_SUMMER_20",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_04.png",
+                    "name": "IMAGE_AUTUMN_04",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_16.png",
+                    "name": "IMAGE_AUTUMN_16",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_05.png",
+                    "name": "IMAGE_AUTUMN_05",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_17.png",
+                    "name": "IMAGE_AUTUMN_17",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_18.png",
+                    "name": "IMAGE_AUTUMN_18",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_06.png",
+                    "name": "IMAGE_AUTUMN_06",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_19.png",
+                    "name": "IMAGE_AUTUMN_19",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_01.png",
+                    "name": "IMAGE_AUTUMN_01",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_02.png",
+                    "name": "IMAGE_AUTUMN_02",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_07.png",
+                    "name": "IMAGE_AUTUMN_07",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_03.png",
+                    "name": "IMAGE_AUTUMN_03",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_20.png",
+                    "name": "IMAGE_AUTUMN_20",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_08.png",
+                    "name": "IMAGE_AUTUMN_08",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_09.png",
+                    "name": "IMAGE_AUTUMN_09",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_21.png",
+                    "name": "IMAGE_AUTUMN_21",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_10.png",
+                    "name": "IMAGE_AUTUMN_10",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_11.png",
+                    "name": "IMAGE_AUTUMN_11",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_12.png",
+                    "name": "IMAGE_AUTUMN_12",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_22.png",
+                    "name": "IMAGE_AUTUMN_22",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_13.png",
+                    "name": "IMAGE_AUTUMN_13",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_14.png",
+                    "name": "IMAGE_AUTUMN_14",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_23.png",
+                    "name": "IMAGE_AUTUMN_23",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/autumn_15.png",
+                    "name": "IMAGE_AUTUMN_15",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_15.png",
+                    "name": "IMAGE_SUMMER_15",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_21.png",
+                    "name": "IMAGE_SUMMER_21",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_03.png",
+                    "name": "IMAGE_WINTER_03",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_10.png",
+                    "name": "IMAGE_WINTER_10",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/winter_17.png",
+                    "name": "IMAGE_WINTER_17",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_06.png",
+                    "name": "IMAGE_SPRING_06",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_13.png",
+                    "name": "IMAGE_SPRING_13",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/spring_20.png",
+                    "name": "IMAGE_SPRING_20",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_03.png",
+                    "name": "IMAGE_SUMMER_03",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Summer_09.png",
+                    "name": "IMAGE_SUMMER_09",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "basalt"
+        ],
+        "uuid": "0b8fc157-3c2b-48d1-9986-3b7a09d7d403",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.2.0"
+}
