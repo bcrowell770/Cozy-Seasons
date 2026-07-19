@@ -408,16 +408,27 @@ static void update_background(Season season, int hour) {
     return;
   }
 
-  s_current_hour = hour;
-  s_current_season = season;
-
+  // Backgrounds are the largest heap allocation in the app. Detach the old
+  // bitmap before freeing it so the layer can never draw freed memory, then
+  // only mark the new hour as loaded after allocation succeeds. If memory is
+  // temporarily tight, the minute tick will retry instead of leaving the face
+  // blank until the next hour.
   if (s_bg_bitmap) {
+    bitmap_layer_set_bitmap(s_bg_layer, NULL);
     gbitmap_destroy(s_bg_bitmap);
     s_bg_bitmap = NULL;
   }
 
-  s_bg_bitmap = gbitmap_create_with_resource(get_background_resource_for_hour(season, hour));
+  const uint32_t resource_id = get_background_resource_for_hour(season, hour);
+  s_bg_bitmap = gbitmap_create_with_resource(resource_id);
+  if (!s_bg_bitmap) {
+    APP_LOG(APP_LOG_LEVEL_ERROR, "Background load failed: resource %lu", (unsigned long)resource_id);
+    return;
+  }
+
   bitmap_layer_set_bitmap(s_bg_layer, s_bg_bitmap);
+  s_current_hour = hour;
+  s_current_season = season;
 }
 
 static bool is_summer_night_hour(int hour) {
@@ -932,6 +943,14 @@ static void main_window_load(Window *window) {
   s_bg_layer = bitmap_layer_create(GRect(0, 0, bounds.size.w, bounds.size.h));
   layer_add_child(s_window_layer, bitmap_layer_get_layer(s_bg_layer));
 
+  // Claim the single large bitmap allocation while the heap is least
+  // fragmented. update_time() below will skip reloading this same image.
+  time_t now = time(NULL);
+  struct tm *initial_time = localtime(&now);
+  if (initial_time) {
+    update_background(get_effective_season(initial_time), initial_time->tm_hour);
+  }
+
   s_effect_layer = layer_create(bounds);
   layer_set_update_proc(s_effect_layer, effect_layer_update_proc);
   layer_set_hidden(s_effect_layer, true);
@@ -1050,7 +1069,9 @@ static void init(void) {
   app_message_register_outbox_failed(outbox_failed_callback);
   app_message_register_outbox_sent(outbox_sent_callback);
 
-  app_message_open(256, 256);
+  // Settings arrive from Clay, but the watchface sends no dictionary payloads.
+  // Keep the full inbox while avoiding an unused 256-byte outbox allocation.
+  app_message_open(256, 64);
 }
 
 static void deinit(void) {

@@ -2,7 +2,7 @@
 
 ## Current Status
 
-v1.1 has been published. The watchface is functional and building successfully in CloudPebble.
+v1.2 builds successfully with Pebble SDK 4.17. The watchface remains Basalt-only.
 
 ## Completed
 
@@ -41,6 +41,11 @@ v1.1 has been published. The watchface is functional and building successfully i
 - Bluetooth icon frame enlarged and restored to the right-center area in both modes
 - Bluetooth icon layer now matches the 30x30 asset size instead of using a smaller clipping frame
 - CloudPebble message key issue identified and resolved
+- Complete Pebble SDK project structure restored from the CloudPebble export
+- Winter backgrounds converted to the native Basalt palette, reducing them by 85.2%
+- Initial background allocation moved earlier to reduce heap fragmentation
+- Failed background loads now retry on the next minute tick
+- AppMessage outbox allocation reduced because the watchface does not send payloads
 
 ## Current Behavior Notes
 
@@ -77,4 +82,4 @@ If only `config.js` is updated, build may fail with undeclared `MESSAGE_KEY_*`.
 
 ## Next Milestone
 
-No active milestone. Future work should start from a new task.
+Publish v1.2 after review and on-watch validation.

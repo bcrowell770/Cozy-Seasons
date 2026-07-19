@@ -1,11 +1,14 @@
 # Current Task
 
-No active task.
+Build and publish the optimized v1.2 release.
 
 ## Current Release
 
-v1.1 has been published.
+v1.2 builds successfully with Pebble SDK 4.17 and is ready for review.
 
-## Next Step
+## Release Scope
 
-Future work should begin with a new task and should preserve the current v1.1 behavior unless explicitly scoped otherwise.
+- Preserve all v1.1 behavior
+- Improve background loading reliability
+- Reduce oversized winter resources
+- Restore a complete, locally buildable Pebble project

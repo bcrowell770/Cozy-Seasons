@@ -8,6 +8,27 @@ No unreleased changes.
 
 ---
 
+## [1.2] - 2026-07-18
+
+### Added
+
+- Complete local Pebble SDK project files and resource manifest
+- Reproducible local Basalt build support through the Pebble SDK
+- Background resource allocation failure logging
+
+### Changed
+
+- Reduced the 24 winter background images from 1,535,595 bytes to 227,863 bytes by converting them to the native Basalt color palette
+- Load the initial background before smaller UI allocations to reduce heap fragmentation
+- Reduced the unused AppMessage outbox allocation from 256 bytes to 64 bytes
+
+### Fixed
+
+- Retry a failed background allocation on the next minute tick instead of leaving the watchface blank until the following hour
+- Detach the bitmap layer before destroying its background bitmap, preventing a stale pointer during image changes
+
+---
+
 ## [1.1] - 2026-04-11
 
 ### Added
