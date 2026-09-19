@@ -48,6 +48,9 @@ typedef struct {
   int size;
   int step;
   int phase;
+  int fx, fy; // Positions in 1/256 pixel units.
+  int vx, vy, target_vx, target_vy;
+  int turn_in;
   bool active;
 } Particle;
 
@@ -453,7 +456,12 @@ static EffectType get_effect_for_season_and_hour(Season season, int hour) {
 static GColor get_particle_color(EffectType effect, int index) {
   switch (effect) {
     case EFFECT_PETALS:
-      return (index % 2 == 0) ? GColorPastelYellow : GColorWhite;
+      switch (index % 4) {
+        case 0: return GColorMelon;
+        case 1: return GColorPastelYellow;
+        case 2: return GColorFromRGB(255, 170, 255);
+        default: return GColorWhite;
+      }
 
     case EFFECT_SEEDS:
       return GColorWhite;
@@ -515,7 +523,7 @@ static void start_particle_animation(void) {
     Particle *p = &s_particles[i];
     p->active = true;
     p->step = 0;
-    p->phase = i * 2;
+    p->phase = rand() % 256;
 
     switch (s_current_effect) {
       case EFFECT_SNOW:
@@ -523,7 +531,7 @@ static void start_particle_animation(void) {
         p->y = -(rand() % 60) - (i * 10);
         p->dx = 0;
         p->dy = 1 + (i % 2);
-        p->size = (i % 3 == 0) ? 4 : 3;
+        p->size = (i % 3 == 0) ? 6 : 5;
         break;
 
       case EFFECT_PETALS:
@@ -531,7 +539,7 @@ static void start_particle_animation(void) {
         p->y = 45 + (rand() % 70);
         p->dx = 1 + (i % 2);
         p->dy = (i % 2 == 0) ? 0 : 1;
-        p->size = 4;
+        p->size = (i % 3 == 0) ? 7 : 6;
         break;
 
       case EFFECT_SEEDS:
@@ -539,7 +547,7 @@ static void start_particle_animation(void) {
         p->y = 35 + (rand() % 80);
         p->dx = 1;
         p->dy = 0;
-        p->size = 3;
+        p->size = (i % 3 == 0) ? 7 : 5;
         break;
 
       case EFFECT_FIREFLIES:
@@ -547,7 +555,7 @@ static void start_particle_animation(void) {
         p->y = 45 + rand() % 70;
         p->dx = (i % 2 == 0) ? 1 : -1;
         p->dy = (i % 3 == 0) ? 1 : 0;
-        p->size = (i % 4 == 0) ? 4 : 3;
+        p->size = (i % 4 == 0) ? 6 : 5;
         break;
 
       case EFFECT_LEAVES:
@@ -555,7 +563,7 @@ static void start_particle_animation(void) {
         p->y = 75 + (rand() % 45);
         p->dx = 2 + (i % 2);
         p->dy = (i % 2 == 0) ? 0 : 1;
-        p->size = (i % 3 == 0) ? 5 : 4;
+        p->size = (i % 3 == 0) ? 8 : 6;
         break;
 
       case EFFECT_NONE:
@@ -563,6 +571,17 @@ static void start_particle_animation(void) {
         p->active = false;
         break;
     }
+    p->fx = p->x * 256;
+    p->fy = p->y * 256;
+    p->vx = s_current_effect == EFFECT_FIREFLIES ? (rand() % 161) - 80 : p->dx * 256;
+    p->vy = s_current_effect == EFFECT_FIREFLIES ? (rand() % 121) - 60 : p->dy * 256;
+    if (s_current_effect == EFFECT_SEEDS) {
+      p->vx = 115 + p->size * 12;
+      p->vy = 12 + p->size * 3;
+    }
+    p->target_vx = p->vx;
+    p->target_vy = p->vy;
+    p->turn_in = 1 + rand() % 25;
   }
 
   if (s_effect_layer) {
@@ -580,65 +599,57 @@ static void particle_timer_callback(void *context) {
     return;
   }
 
-  static const int wobble_pattern[] = {0, 1, 1, 0, 0, -1, -1, 0};
+  // A fired timer is no longer a cancellable pending timer.
+  s_particle_timer = NULL;
   GRect bounds = layer_get_bounds(s_window_layer);
   bool any_active = false;
 
   for (int i = 0; i < PARTICLE_COUNT; i++) {
     Particle *p = &s_particles[i];
-    if (!p->active) {
-      continue;
-    }
-
-    any_active = true;
+    if (!p->active) continue;
     p->step++;
 
-    switch (s_current_effect) {
-      case EFFECT_SNOW:
-        p->y += p->dy;
-        p->x += wobble_pattern[(p->step + p->phase) % 8];
-        if (p->y > bounds.size.h) {
-          p->active = false;
+    if (--p->turn_in <= 0) {
+      p->turn_in = 18 + rand() % 40;
+      if (s_current_effect == EFFECT_FIREFLIES) {
+        p->target_vx = (rand() % 257) - 128;
+        p->target_vy = (rand() % 193) - 96;
+        // Gently steer back before reaching an edge.
+        if (p->x < 18) p->target_vx = 80;
+        if (p->x > bounds.size.w - 18) p->target_vx = -80;
+        if (p->y < 40) p->target_vy = 60;
+        if (p->y > bounds.size.h - 35) p->target_vy = -60;
+      } else {
+        p->target_vx = p->dx * 256 + (rand() % 129) - 64;
+        p->target_vy = p->dy * 256 + (rand() % 161) - 80;
+        if (s_current_effect == EFFECT_SEEDS) {
+          // Airborne seed fluff: light wind with a slow, varied settling motion.
+          p->target_vx = 115 + p->size * 12 + (rand() % 97) - 48;
+          p->target_vy = 12 + p->size * 3 + (rand() % 97) - 48;
         }
-        break;
-
-      case EFFECT_PETALS:
-        p->x += p->dx;
-        p->y += p->dy + wobble_pattern[(p->step + p->phase) % 8];
-        if (p->x > bounds.size.w + 8 || p->y > bounds.size.h + 8 || p->y < -8) {
-          p->active = false;
+        if (s_current_effect == EFFECT_SNOW) {
+          p->target_vx = (rand() % 193) - 96;
         }
-        break;
-
-      case EFFECT_SEEDS:
-        p->x += p->dx;
-        p->y += wobble_pattern[(p->step + p->phase) % 8];
-        if (p->x > bounds.size.w + 8 || p->y > bounds.size.h + 8 || p->y < -8) {
-          p->active = false;
-        }
-        break;
-
-      case EFFECT_FIREFLIES:
-        p->x += p->dx;
-        p->y += wobble_pattern[(p->step + p->phase) % 8] / 2;
-        if (p->x < 0 || p->x > bounds.size.w || p->y < 30 || p->y > bounds.size.h - 20) {
-          p->active = false;
-        }
-        break;
-
-      case EFFECT_LEAVES:
-        p->x += p->dx;
-        p->y += p->dy + wobble_pattern[(p->step + p->phase) % 8];
-        if (p->x > bounds.size.w + 10 || p->y > bounds.size.h + 10 || p->y < -10) {
-          p->active = false;
-        }
-        break;
-
-      case EFFECT_NONE:
-      default:
-        p->active = false;
-        break;
+      }
     }
+    // Bounded acceleration without floating point or per-frame allocation.
+    int ax = p->target_vx - p->vx;
+    int ay = p->target_vy - p->vy;
+    p->vx += ax > 4 ? 4 : (ax < -4 ? -4 : ax);
+    p->vy += ay > 4 ? 4 : (ay < -4 ? -4 : ay);
+    p->fx += p->vx;
+    p->fy += p->vy;
+    p->x = p->fx / 256;
+    p->y = p->fy / 256;
+
+    if (s_current_effect == EFFECT_FIREFLIES) {
+      // Hovering particles need a lifetime even if they never leave the screen.
+      if (p->step > 110 + p->phase / 4) p->active = false;
+    } else if (p->x > bounds.size.w + 10 || p->y > bounds.size.h + 10 ||
+               (s_current_effect != EFFECT_SNOW && p->y < -10) || p->step > 600) {
+      p->active = false;
+    }
+    any_active |= p->active;
   }
 
   if (!any_active) {
@@ -651,6 +662,33 @@ static void particle_timer_callback(void *context) {
   }
 
   s_particle_timer = app_timer_register(PARTICLE_FRAME_MS, particle_timer_callback, NULL);
+}
+
+// Hand-shaped silhouettes at the actual display sizes. One bit per pixel;
+// no bitmap resources or per-frame allocations are needed.
+static void draw_botanical_particle(GContext *ctx, const Particle *p, bool leaf, int index) {
+  static const uint8_t petal_small[] = {0x1e, 0x3f, 0x3f, 0x1f, 0x0e, 0x04};
+  static const uint8_t petal_large[] = {0x1c, 0x3e, 0x7f, 0x7f, 0x3e, 0x1c, 0x08};
+  static const uint8_t leaf_small[] = {0x20, 0x38, 0x1c, 0x1e, 0x0e, 0x04};
+  static const uint8_t leaf_large[] = {0x80, 0xe0, 0x78, 0x7c, 0x3e, 0x1e, 0x0c, 0x04};
+  const uint8_t *rows = leaf ? (p->size == 8 ? leaf_large : leaf_small)
+                             : (p->size == 7 ? petal_large : petal_small);
+  int size = leaf ? (p->size == 8 ? 8 : 6) : (p->size == 7 ? 7 : 6);
+  bool mirror = (index % 2) != 0;
+  graphics_context_set_stroke_color(ctx, get_particle_color(leaf ? EFFECT_LEAVES : EFFECT_PETALS, index));
+  graphics_context_set_stroke_width(ctx, 1);
+  for (int y = 0; y < size; y++) {
+    for (int x = 0; x < size; x++) {
+      if (rows[y] & (1u << x)) {
+        graphics_draw_pixel(ctx, GPoint(p->x + (mirror ? size - 1 - x : x), p->y + y));
+      }
+    }
+  }
+  if (leaf) {
+    // Continue the tapered base into a two-pixel diagonal stem.
+    graphics_draw_pixel(ctx, GPoint(p->x + (mirror ? size - 2 : 1), p->y + size));
+    graphics_draw_pixel(ctx, GPoint(p->x + (mirror ? size - 1 : 0), p->y + size + 1));
+  }
 }
 
 static void effect_layer_update_proc(Layer *layer, GContext *ctx) {
@@ -673,27 +711,34 @@ static void effect_layer_update_proc(Layer *layer, GContext *ctx) {
         break;
 
       case EFFECT_PETALS:
-        graphics_context_set_fill_color(ctx, get_particle_color(EFFECT_PETALS, i));
-        graphics_fill_rect(ctx, GRect(p->x, p->y, p->size, p->size - 1), 1, GCornersAll);
+        draw_botanical_particle(ctx, p, false, i);
         break;
 
-      case EFFECT_SEEDS:
+      case EFFECT_SEEDS: {
+        // A fine parachute of filaments above a tiny hanging seed.
+        int radius = p->size / 2;
+        int lean = p->vy < 0 ? -1 : 1;
+        GPoint hub = GPoint(p->x + radius, p->y + radius);
         graphics_context_set_stroke_color(ctx, get_particle_color(EFFECT_SEEDS, i));
-        graphics_draw_line(ctx, GPoint(p->x, p->y), GPoint(p->x + p->size + 1, p->y));
-        graphics_draw_pixel(ctx, GPoint(p->x - 1, p->y - 1));
-        graphics_draw_pixel(ctx, GPoint(p->x - 1, p->y + 1));
+        graphics_context_set_stroke_width(ctx, 1);
+        graphics_draw_line(ctx, hub, GPoint(p->x, p->y + 1));
+        graphics_draw_line(ctx, hub, GPoint(p->x + radius, p->y));
+        graphics_draw_line(ctx, hub, GPoint(p->x + p->size - 1, p->y + 1));
+        graphics_draw_line(ctx, hub, GPoint(hub.x + lean, p->y + p->size));
+        graphics_context_set_fill_color(ctx, GColorPastelYellow);
+        graphics_fill_rect(ctx, GRect(hub.x + lean, p->y + p->size, 2, 2), 0, GCornerNone);
         break;
+      }
 
       case EFFECT_FIREFLIES:
-        if (((p->step / 2) + i) % 4 != 0) {
+        if ((p->step + p->phase) % (28 + p->phase % 25) < (21 + p->phase % 19)) {
           graphics_context_set_fill_color(ctx, get_particle_color(EFFECT_FIREFLIES, i));
           graphics_fill_rect(ctx, GRect(p->x, p->y, p->size, p->size), 1, GCornersAll);
         }
         break;
 
       case EFFECT_LEAVES:
-        graphics_context_set_fill_color(ctx, get_particle_color(EFFECT_LEAVES, i));
-        graphics_fill_rect(ctx, GRect(p->x, p->y, p->size, p->size - 1), 1, GCornersAll);
+        draw_botanical_particle(ctx, p, true, i);
         break;
 
       case EFFECT_NONE:
@@ -722,7 +767,6 @@ static void accel_tap_handler(AccelAxisType axis, int32_t direction) {
     return;
   }
 
-  stop_particle_animation();
   start_particle_animation();
 }
 

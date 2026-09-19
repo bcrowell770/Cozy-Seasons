@@ -2,9 +2,22 @@
 
 All notable changes to this watchface will be documented here.
 
-## [Unreleased]
+## [1.4.0]
 
-No unreleased changes.
+- Spring petals now have rounded tops and tapered bases for a more recognizable petal shape.
+- Autumn leaves now have pointed, asymmetric shapes and short stems.
+- Preserved the mixed particle sizes, seasonal colors, and smooth movement introduced in v1.3.0.
+- All 96 hourly seasonal backgrounds remain unchanged.
+
+## [1.3.0]
+
+- More natural seasonal animations with smoother movement and independently varied drift.
+- Fireflies now wander gently in all directions, with slower, varied blinking.
+- Larger particles across all seasons, while preserving their mix of sizes.
+- Spring petals now feature pink, lavender-pink, pale yellow, and white.
+- Improved summer pollen with delicate seed fluff and a slower, wind-driven motion.
+- Repeated shakes no longer interrupt and restart an active animation.
+- All 96 hourly seasonal backgrounds remain unchanged.
 
 ---
 
